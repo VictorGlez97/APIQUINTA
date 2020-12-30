@@ -32,6 +32,7 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Users::index');
 $routes->get('/login', 'Users::login');
+$routes->get('/api/quintas/list', 'Quintas::index');
 
 /**
  * --------------------------------------------------------------------
