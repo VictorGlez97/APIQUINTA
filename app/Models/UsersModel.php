@@ -71,5 +71,66 @@ class UsersModel extends Model {
         return $query->getResult();
         
     }
+     
+    function verifyPass(){
+        
+        $query = "SELECT * FROM users WHERE email = '{$this->getEmail()}'";
+        $sql = $this->db->query( $query );
+
+        if ( !empty( $sql->getResult() && is_array( $sql->getResult() ) && count( $sql->getResult() ) === 1 ) ){
+            
+            $user = $sql->getResult()[0];
+            
+            echo $this->getPassword() .'<br/>';
+            echo $user->password .'<br/>';
+            $verify['verify'] = password_verify($this->getPassword(), $user->password);
+            var_dump($verify);
+            
+            if ( $verify['verify'] ){
+                
+                $verify['user'] = $user;
+                return $verify;
+                
+            } else {
+                
+                return $verify;
+                
+            }
+            
+        } else {
+            $verify['verify'] = false;
+            return $verify['verify'];
+        }
+        
+    }
+    
+    function register() {
+        
+        $password = password_hash($this->getPassword(), PASSWORD_BCRYPT, ['cost' => 4]);
+        
+        $query = "INSERT INTO users VALUES(NULL, '{$this->getName()}', '{$this->getLast_name()}', "
+                                                . "'{$this->getTel()}', '{$this->getEmail()}', '{$password}')";
+        
+        //echo $query;                                        
+                                                
+        $sql = $this->db->query($query);
+                        
+        //var_dump($sql);
+        
+        if ($sql){
+            
+            $id = $sql->connID->insert_id;
+            
+            $sql = $this->db->query("SELECT * FROM users WHERE id = '$id'");
+            $register['user'] = $sql->getResult();
+            $register['register'] = true;
+            
+        } else {
+            $register['register'] = false;
+        }
+        
+        return $register;
+        
+    }
     
 }

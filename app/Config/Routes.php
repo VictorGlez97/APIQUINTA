@@ -30,9 +30,10 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Users::index');
-$routes->get('/login', 'Users::login');
-$routes->get('/api/quintas/list', 'Quintas::index');
+$routes->get('/users', 'Users::index');
+$routes->post('/users/login', 'Users::login');
+$routes->post('/users/register', 'Users::register');
+$routes->get('/quintas/list', 'Quintas::index');
 
 /**
  * --------------------------------------------------------------------
