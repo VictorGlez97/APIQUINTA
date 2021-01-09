@@ -14,10 +14,11 @@ class Users extends Controller {
     
     public function login(){
         
-        //var_dump( $_POST );
+        $data = json_decode(file_get_contents('php://input'), true);
+        $user = $data[0];
         
-        $email = !empty($_POST['email']) ? $_POST['email'] : false;
-        $pass = !empty($_POST['pass']) ? $_POST['pass'] : false;
+        $email = !empty($user['email']) ? $user['email'] : false;
+        $pass = !empty($user['pass']) ? $user['pass'] : false;
         
         if ( $email && $pass ){
             
@@ -38,15 +39,22 @@ class Users extends Controller {
     
     public function register(){
         
-        $name = !empty($_POST['name']) ? $_POST['name'] : false;
-        $lastname = !empty($_POST['lastname']) ? $_POST['lastname'] : false;
-        $tel = !empty($_POST['tel']) ? $_POST['tel'] : false;
-        $email = !empty($_POST['email']) ? $_POST['email'] : false;
-        $pass = !empty($_POST['pass']) ? $_POST['pass'] : false;
+        $data = json_decode(file_get_contents('php://input'), true);
+        $user = $data[0];
+        
+        $name = !empty($user['name']) ? $user['name'] : false;
+        $lastname = !empty($user['lastname']) ? $user['lastname'] : false;
+        $tel = !empty($user['tel']) ? $user['tel'] : false;
+        $email = !empty($user['email']) ? $user['email'] : false;
+        $pass = !empty($user['pass']) ? $user['pass'] : false;
+        
+        echo $name;
+        echo $lastname;
+        echo $tel;
+        echo $email;
+        echo $pass;
         
         if ( $name && $lastname && $email && $pass && $tel ){
-            
-            //echo 'hey';
             
             $model = new UsersModel();
             $model->setName($name);
